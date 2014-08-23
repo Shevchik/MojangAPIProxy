@@ -27,6 +27,7 @@ import java.net.Proxy;
 import java.net.URL;
 
 import mojangapiproxy.MojangAPIProxy;
+import mojangapiproxy.data.CachedData.PlayerProfile;
 
 import org.bukkit.craftbukkit.libs.com.google.gson.JsonArray;
 import org.bukkit.craftbukkit.libs.com.google.gson.JsonElement;
@@ -66,9 +67,20 @@ public class ProxyConnection extends HttpURLConnection {
 			JsonArray users = new JsonParser().parse(new String(outputStream.toByteArray(), Charsets.UTF_8)).getAsJsonArray();
 			StringBuilder reply = new StringBuilder("[");
 			for (JsonElement user : users) {
-				String username = user.getAsString().toLowerCase();
-				String info = MojangAPIProxy.getMojangAPIProxy().getCachedData().getPlayerUUID(username).toString().replace("-", "");
-				reply.append(info).append(",");
+				String username = user.getAsString();
+				PlayerProfile info = MojangAPIProxy.getMojangAPIProxy().getCachedData().getPlayerProfile(username);
+				reply.append("{");
+				reply.append("\"id\":");
+				reply.append("\"");
+				reply.append(info.getUUID().toString().replace("-", ""));
+				reply.append("\"");
+				reply.append(",");
+				reply.append("\"name\":");
+				reply.append("\"");
+				reply.append(info.getName());
+				reply.append("\"");
+				reply.append("}");
+				reply.append(",");
 			}
 			reply.deleteCharAt(reply.length() - 1);
 			reply.append("]");

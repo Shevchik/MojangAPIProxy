@@ -27,7 +27,7 @@ import org.bukkit.entity.Player;
 
 public class CachedData {
 
-	private HashMap<String, UUID> data = new  HashMap<String, UUID>();
+	private HashMap<String, PlayerProfile> data = new  HashMap<String, PlayerProfile>();
 
 	@SuppressWarnings("deprecation")
 	public CachedData() {
@@ -43,14 +43,34 @@ public class CachedData {
 	}
 
 	public void addData(String name, UUID uuid) {
-		data.put(name.toLowerCase(), uuid);
+		data.put(name.toLowerCase(), new PlayerProfile(uuid, name));
 	}
 
-	public UUID getPlayerUUID(String name) {
+	public PlayerProfile getPlayerProfile(String name) {
 		if (data.containsKey(name.toLowerCase())) {
 			return data.get(name.toLowerCase());
 		}
-		return UUID.nameUUIDFromBytes(("OfflinePlayer:" + name).getBytes(StandardCharsets.UTF_8));
+		return new PlayerProfile(UUID.nameUUIDFromBytes(("OfflinePlayer:" + name).getBytes(StandardCharsets.UTF_8)), name);
+	}
+
+	public static class PlayerProfile {
+
+		private UUID uuid;
+		private String name;
+
+		public PlayerProfile(UUID uuid, String name) {
+			this.uuid = uuid;
+			this.name = name;
+		}
+
+		public UUID getUUID() {
+			return uuid;
+		}
+
+		public String getName() {
+			return name;
+		}
+
 	}
 
 }
