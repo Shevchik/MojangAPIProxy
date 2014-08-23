@@ -26,7 +26,7 @@ import org.bukkit.entity.Player;
 
 public class CachedData {
 
-	private HashMap<String, HashMap<String, UUID>> data = new  HashMap<String, HashMap<String, UUID>>();
+	private HashMap<String, UUID> data = new  HashMap<String, UUID>();
 
 	public CachedData() {
 		for (OfflinePlayer player : PlayersDataUtils.getPlayers()) {
@@ -41,33 +41,15 @@ public class CachedData {
 	}
 
 	public void addData(String name, UUID uuid) {
-		putIfAbsent(name);
-		getCaseMap(name).put(name, uuid);
-	}
-
-	private void putIfAbsent(String name) {
-		if (!data.containsKey(name.toLowerCase())) {
-			data.put(name.toLowerCase(), new HashMap<String, UUID>());
-		}
+		data.put(name.toLowerCase(), uuid);
 	}
 
 	@SuppressWarnings("deprecation")
 	public UUID getPlayerUUID(String name) {
-		if (hasCaseMap(name)) {
-			HashMap<String, UUID> casemap = getCaseMap(name);
-			if (casemap.containsKey(name)) {
-				return casemap.get(name);
-			}
+		if (data.containsKey(name.toLowerCase())) {
+			return data.get(name.toLowerCase());
 		}
 		return Bukkit.getOfflinePlayer(name).getUniqueId();
-	}
-
-	private boolean hasCaseMap(String name) {
-		return data.containsKey(name.toLowerCase());
-	}
-
-	private HashMap<String, UUID> getCaseMap(String name) {
-		return data.get(name.toLowerCase());
 	}
 
 }
