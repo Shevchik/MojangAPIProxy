@@ -25,6 +25,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLStreamHandler;
 
+import mojangapiproxy.MojangAPIProxy;
+
 public class ProxyStreamHandler extends URLStreamHandler {
 
 	private final URLStreamHandler handler;
@@ -49,7 +51,7 @@ public class ProxyStreamHandler extends URLStreamHandler {
 
 	@Override
 	protected URLConnection openConnection(URL u) throws IOException {
-		if (u.getHost().equals("api.mojang.com") || u.getPath().startsWith("/profiles/minecraft")) {
+		if ((u.getHost().equals("api.mojang.com") || u.getPath().startsWith("/profiles/minecraft")) && shouldProxyRequest()) {
 			return getProxyConnection(u, null);
 		}
 		return getDefaultConnection(u);
@@ -57,7 +59,7 @@ public class ProxyStreamHandler extends URLStreamHandler {
 
 	@Override
 	protected URLConnection openConnection(URL u, Proxy p) throws IOException {
-		if (u.getHost().equals("api.mojang.com") || u.getPath().startsWith("/profiles/minecraft")) {
+		if ((u.getHost().equals("api.mojang.com") || u.getPath().startsWith("/profiles/minecraft")) && shouldProxyRequest()) {
 			return getProxyConnection(u, p);
 		}
 		return getDefaultConnection(u, p);
@@ -83,6 +85,13 @@ public class ProxyStreamHandler extends URLStreamHandler {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	private boolean shouldProxyRequest() {
+		if (MojangAPIProxy.getMojangAPIProxy().isPluginIgnored(MojangAPIProxy.getMojangAPIProxy().getRequestingPlugin())) {
+			return false;
+		}
+		return true;
 	}
 
 }
