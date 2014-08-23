@@ -62,6 +62,9 @@ public class MojangAPIProxy extends JavaPlugin {
 		)
 	);
 	public boolean isPluginIgnored(Plugin plugin) {
+		if (plugin == null) {
+			return false;
+		}
 		return ignoredPlugins.contains(plugin.getName());
 	}
 
