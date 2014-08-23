@@ -47,8 +47,8 @@ public class MojangAPIProxy extends JavaPlugin {
 			getLogger().severe("Unable to set proxy");
 			t.printStackTrace();
 			getLogger().severe("Shutting down server");
+			Bukkit.shutdown();
 		}
-		Bukkit.shutdown();
 	}
 
 }
