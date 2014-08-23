@@ -1,0 +1,4 @@
+name: MojangAPIProxy
+main: mojangapiproxy.MojangAPIProxy
+version: 1.0
+author: _Shevchik_
