@@ -22,6 +22,7 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 
 public class CachedData {
 
@@ -32,6 +33,9 @@ public class CachedData {
 			if (player.getName() == null) {
 				continue;
 			}
+			addData(player.getName(), player.getUniqueId());
+		}
+		for (Player player : Bukkit.getOnlinePlayers()) {
 			addData(player.getName(), player.getUniqueId());
 		}
 	}

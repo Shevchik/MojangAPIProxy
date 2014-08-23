@@ -15,30 +15,20 @@
  *
  */
 
-package mojangapiproxy;
+package mojangapiproxy.listeners;
 
-import mojangapiproxy.data.CachedData;
-import mojangapiproxy.listeners.JoinListener;
+import mojangapiproxy.MojangAPIProxy;
 
-import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 
-public class MojangAPIProxy extends JavaPlugin {
+public class JoinListener implements Listener {
 
-	private static MojangAPIProxy instance;
-	public static MojangAPIProxy getMojangAPIProxy() {
-		return instance;
-	}
-
-	private CachedData data;
-	public CachedData getCachedData() {
-		return data;
-	}
-
-	@Override
-	public void onEnable() {
-		instance = this;
-		data = new CachedData();
-		getServer().getPluginManager().registerEvents(new JoinListener(), this);
+	@EventHandler(priority = EventPriority.LOWEST)
+	public void onJoin(PlayerJoinEvent event) {
+		MojangAPIProxy.getMojangAPIProxy().getCachedData().addData(event.getPlayer().getName(), event.getPlayer().getUniqueId());
 	}
 
 }
