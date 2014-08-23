@@ -40,15 +40,15 @@ public class CachedData {
 		}
 	}
 
-	private void putIfAbsent(String player) {
-		if (!data.containsKey(player.toLowerCase())) {
-			data.put(player.toLowerCase(), new HashMap<String, UUID>());
-		}
-	}
-
 	public void addData(String name, UUID uuid) {
 		putIfAbsent(name);
-		data.get(name.toLowerCase()).put(name, uuid);
+		getCaseMap(name).put(name, uuid);
+	}
+
+	private void putIfAbsent(String name) {
+		if (!data.containsKey(name.toLowerCase())) {
+			data.put(name.toLowerCase(), new HashMap<String, UUID>());
+		}
 	}
 
 	@SuppressWarnings("deprecation")
