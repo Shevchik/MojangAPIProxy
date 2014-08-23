@@ -19,7 +19,9 @@ package mojangapiproxy;
 
 import mojangapiproxy.data.CachedData;
 import mojangapiproxy.listeners.JoinListener;
+import mojangapiproxy.proxy.ProxyInjector;
 
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class MojangAPIProxy extends JavaPlugin {
@@ -39,6 +41,14 @@ public class MojangAPIProxy extends JavaPlugin {
 		instance = this;
 		data = new CachedData();
 		getServer().getPluginManager().registerEvents(new JoinListener(), this);
+		try {
+			ProxyInjector.injectProxy();
+		} catch (Throwable t) {
+			getLogger().severe("Unable to set proxy");
+			t.printStackTrace();
+			getLogger().severe("Shutting down server");
+		}
+		Bukkit.shutdown();
 	}
 
 }
