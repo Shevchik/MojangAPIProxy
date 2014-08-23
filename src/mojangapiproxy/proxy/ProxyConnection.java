@@ -67,7 +67,7 @@ public class ProxyConnection extends HttpURLConnection {
 			StringBuilder reply = new StringBuilder("[");
 			for (JsonElement user : users) {
 				String username = user.getAsString().toLowerCase();
-				String info = MojangAPIProxy.getMojangAPIProxy().getCachedData().getPlayerUUID(username).toString();
+				String info = MojangAPIProxy.getMojangAPIProxy().getCachedData().getPlayerUUID(username).toString().replace("-", "");
 				reply.append(info).append(",");
 			}
 			reply.deleteCharAt(reply.length() - 1);
