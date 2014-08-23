@@ -17,6 +17,7 @@
 
 package mojangapiproxy.data;
 
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -28,6 +29,7 @@ public class CachedData {
 
 	private HashMap<String, UUID> data = new  HashMap<String, UUID>();
 
+	@SuppressWarnings("deprecation")
 	public CachedData() {
 		for (OfflinePlayer player : PlayersDataUtils.getPlayers()) {
 			if (player.getName() == null) {
@@ -44,12 +46,11 @@ public class CachedData {
 		data.put(name.toLowerCase(), uuid);
 	}
 
-	@SuppressWarnings("deprecation")
 	public UUID getPlayerUUID(String name) {
 		if (data.containsKey(name.toLowerCase())) {
 			return data.get(name.toLowerCase());
 		}
-		return Bukkit.getOfflinePlayer(name).getUniqueId();
+		return UUID.nameUUIDFromBytes(("OfflinePlayer:" + name).getBytes(StandardCharsets.UTF_8));
 	}
 
 }
