@@ -63,6 +63,7 @@ public class WGConverter {
 				System.out.println("Converted region "+pr.getId());
 			}
 		}
+		cache.clear();
 	}
 
 	private static String convertUUID(UUID uuid) {
