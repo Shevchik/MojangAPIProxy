@@ -49,7 +49,7 @@ public class ProxyStreamHandler extends URLStreamHandler {
 
 	@Override
 	protected URLConnection openConnection(URL u) throws IOException {
-		if ((u.getHost().toLowerCase().equals("api.mojang.com") || u.getPath().toLowerCase().startsWith("/profiles/minecraft")) && shouldProxyRequest()) {
+		if ((u.getHost().toLowerCase().equals("api.mojang.com") && u.getPath().toLowerCase().startsWith("/profiles/minecraft")) && shouldProxyRequest()) {
 			return getProxyConnection(u, null);
 		}
 		return getDefaultConnection(u);
@@ -57,7 +57,7 @@ public class ProxyStreamHandler extends URLStreamHandler {
 
 	@Override
 	protected URLConnection openConnection(URL u, Proxy p) throws IOException {
-		if ((u.getHost().toLowerCase().equals("api.mojang.com") || u.getPath().toLowerCase().startsWith("/profiles/minecraft")) && shouldProxyRequest()) {
+		if ((u.getHost().toLowerCase().equals("api.mojang.com") && u.getPath().toLowerCase().startsWith("/profiles/minecraft")) && shouldProxyRequest()) {
 			return getProxyConnection(u, p);
 		}
 		return getDefaultConnection(u, p);
