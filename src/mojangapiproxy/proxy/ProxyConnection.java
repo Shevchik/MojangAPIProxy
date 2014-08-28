@@ -61,6 +61,11 @@ public class ProxyConnection extends HttpURLConnection {
 	}
 
 	@Override
+	public int getResponseCode() {
+		return 200;
+	}
+
+	@Override
 	public InputStream getInputStream() throws IOException {
 		if (inputStream == null) {
 			outClosed = true;
