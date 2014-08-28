@@ -17,16 +17,11 @@
 
 package mojangapiproxy;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-
 import mojangapiproxy.data.CachedData;
 import mojangapiproxy.listeners.JoinListener;
 import mojangapiproxy.proxy.ProxyInjector;
 
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class MojangAPIProxy extends JavaPlugin {
@@ -46,6 +41,7 @@ public class MojangAPIProxy extends JavaPlugin {
 		instance = this;
 		data = new CachedData();
 		getServer().getPluginManager().registerEvents(new JoinListener(), this);
+		getCommand("mapiproxy").setExecutor(new Commands());
 		try {
 			ProxyInjector.injectProxy();
 		} catch (Throwable t) {
@@ -54,43 +50,6 @@ public class MojangAPIProxy extends JavaPlugin {
 			getLogger().severe("Shutting down server");
 			Bukkit.shutdown();
 		}
-	}
-
-	private HashSet<String> ignoredPlugins = new HashSet<String>(
-		Arrays.asList(
-			"SkinsRestorer"
-		)
-	);
-	public boolean isPluginIgnored(Plugin plugin) {
-		if (plugin == null) {
-			return true;
-		}
-		return ignoredPlugins.contains(plugin.getName());
-	}
-
-	public Plugin getRequestingPlugin() {
-		HashMap<ClassLoader, Plugin> map = getClassloaderToPluginMap();
-		StackTraceElement[] stacktrace = new Exception().getStackTrace();
-		for (int i = 0; i < stacktrace.length; i++) {
-			StackTraceElement element = stacktrace[i];
-			try {
-				ClassLoader loader = Class.forName(element.getClassName(), false, getClass().getClassLoader()).getClassLoader();
-				if (map.containsKey(loader)) {
-					return map.get(loader);
-				}
-			} catch (ClassNotFoundException e) {
-			}
-		}
-		return null;
-	}
-
-	private HashMap<ClassLoader, Plugin> getClassloaderToPluginMap() {
-		HashMap<ClassLoader, Plugin> map = new HashMap<ClassLoader, Plugin>();
-		for (Plugin plugin : Bukkit.getPluginManager().getPlugins()) {
-			map.put(plugin.getClass().getClassLoader(), plugin);
-		}
-		map.remove(getClass().getClassLoader());
-		return map;
 	}
 
 }

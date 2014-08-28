@@ -25,8 +25,6 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLStreamHandler;
 
-import mojangapiproxy.MojangAPIProxy;
-
 public class ProxyStreamHandler extends URLStreamHandler {
 
 	private final URLStreamHandler handler;
@@ -88,7 +86,7 @@ public class ProxyStreamHandler extends URLStreamHandler {
 	}
 
 	private boolean shouldProxyRequest() {
-		if (MojangAPIProxy.getMojangAPIProxy().isPluginIgnored(MojangAPIProxy.getMojangAPIProxy().getRequestingPlugin())) {
+		if (ProxyUtils.isPluginIgnored(ProxyUtils.getRequestingPlugin())) {
 			return false;
 		}
 		return true;

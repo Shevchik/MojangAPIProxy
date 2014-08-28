@@ -2,3 +2,6 @@ name: MojangAPIProxy
 main: mojangapiproxy.MojangAPIProxy
 version: 1.0
 author: _Shevchik_
+commands:
+  mapiproxy:
+    description: MojangAPIProxyCommands
