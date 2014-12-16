@@ -3,7 +3,12 @@ bin/
 build/
 target/
 .externalToolBuilders/
- # Eclipse Files #
+
+# Eclipse Files #
 *.project
 *.classpath
 *.prefs
+
+# NetBeans Files #
+nbactions.xml
+nb-configuration.xml
