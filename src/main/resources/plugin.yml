@@ -1,0 +1,7 @@
+name: ${project.artifactId}
+main: ${project.groupId}.${project.artifactId}.MojangAPIProxy
+version: ${project.version}
+author: _Shevchik_
+commands:
+  mapiproxy:
+    description: MojangAPIProxyCommands
