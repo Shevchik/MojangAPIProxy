@@ -28,24 +28,20 @@ import org.bukkit.plugin.Plugin;
 
 public class ProxyUtils {
 
-	private static HashSet<String> ignoredPlugins = new HashSet<>(
+	private static final HashSet<String> ignoredPlugins = new HashSet<>(
 		Arrays.asList(
 			"SkinsRestorer"
 		)
 	);
 
 	public static boolean isPluginIgnored(Plugin plugin) {
-		if (plugin == null) {
-			return true;
-		}
-		return ignoredPlugins.contains(plugin.getName());
+		return plugin != null ? ignoredPlugins.contains(plugin.getName()) : true;
 	}
 
 	public static Plugin getRequestingPlugin() {
 		HashMap<ClassLoader, Plugin> map = getClassloaderToPluginMap();
 		StackTraceElement[] stacktrace = new Exception().getStackTrace();
-		for (int i = 0; i < stacktrace.length; i++) {
-			StackTraceElement element = stacktrace[i];
+		for(StackTraceElement element : stacktrace)
 			try {
 				ClassLoader loader = Class.forName(element.getClassName(), false, MojangAPIProxy.class.getClassLoader()).getClassLoader();
 				if (map.containsKey(loader)) {
@@ -53,7 +49,6 @@ public class ProxyUtils {
 				}
 			} catch (ClassNotFoundException e) {
 			}
-		}
 		return null;
 	}
 

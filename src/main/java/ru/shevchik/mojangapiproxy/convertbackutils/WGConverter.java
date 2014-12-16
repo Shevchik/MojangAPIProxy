@@ -29,7 +29,7 @@ import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 
 public class WGConverter {
 
-	private static HashMap<UUID, String> cache = new HashMap<>();
+	private static final HashMap<UUID, String> cache = new HashMap<>();
 
 	public static void convertFromOnlineMode() {
 		for (RegionManager rm : WGBukkit.getPlugin().getRegionContainer().getLoaded()) {

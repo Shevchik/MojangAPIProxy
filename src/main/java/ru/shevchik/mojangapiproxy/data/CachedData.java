@@ -25,7 +25,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
-public class CachedData {
+public final class CachedData {
 
 	private HashMap<String, PlayerProfile> data = new  HashMap<>();
 
@@ -55,8 +55,8 @@ public class CachedData {
 
 	public static class PlayerProfile {
 
-		private UUID uuid;
-		private String name;
+		private final UUID uuid;
+		private final String name;
 
 		public PlayerProfile(UUID uuid, String name) {
 			this.uuid = uuid;
