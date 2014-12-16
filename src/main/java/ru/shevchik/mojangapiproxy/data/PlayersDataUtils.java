@@ -26,7 +26,7 @@ import org.bukkit.OfflinePlayer;
 public class PlayersDataUtils {
 
 	public static LinkedList<OfflinePlayer> getPlayers() {
-		LinkedList<OfflinePlayer> players = new LinkedList<OfflinePlayer>();
+		LinkedList<OfflinePlayer> players = new LinkedList<>();
 		for (File file : getPlayersDataFolder().listFiles()) {
 			if (file.getName().endsWith(".dat")) {
 				String uuidstring = file.getName().substring(0, file.getName().length() - 4);

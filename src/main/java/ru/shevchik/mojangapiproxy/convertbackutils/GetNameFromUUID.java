@@ -31,7 +31,7 @@ import com.google.common.base.Charsets;
 
 public class GetNameFromUUID {
 
-	private static String skullbloburl = "https://sessionserver.mojang.com/session/minecraft/profile/";
+	private static final String skullbloburl = "https://sessionserver.mojang.com/session/minecraft/profile/";
 	public static String getName(UUID id) {
 		try {
 			URL url = new URL(skullbloburl+id.toString().replace("-", "")+"?unsigned=false");

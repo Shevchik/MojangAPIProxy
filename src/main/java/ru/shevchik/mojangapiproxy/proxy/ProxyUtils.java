@@ -28,7 +28,7 @@ import org.bukkit.plugin.Plugin;
 
 public class ProxyUtils {
 
-	private static HashSet<String> ignoredPlugins = new HashSet<String>(
+	private static HashSet<String> ignoredPlugins = new HashSet<>(
 		Arrays.asList(
 			"SkinsRestorer"
 		)
@@ -58,7 +58,7 @@ public class ProxyUtils {
 	}
 
 	private static HashMap<ClassLoader, Plugin> getClassloaderToPluginMap() {
-		HashMap<ClassLoader, Plugin> map = new HashMap<ClassLoader, Plugin>();
+		HashMap<ClassLoader, Plugin> map = new HashMap<>();
 		for (Plugin plugin : Bukkit.getPluginManager().getPlugins()) {
 			map.put(plugin.getClass().getClassLoader(), plugin);
 		}

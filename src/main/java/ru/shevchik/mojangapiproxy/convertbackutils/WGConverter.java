@@ -29,7 +29,7 @@ import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 
 public class WGConverter {
 
-	private static HashMap<UUID, String> cache = new HashMap<UUID, String>();
+	private static HashMap<UUID, String> cache = new HashMap<>();
 
 	public static void convertFromOnlineMode() {
 		for (RegionManager rm : WGBukkit.getPlugin().getRegionContainer().getLoaded()) {
@@ -37,7 +37,7 @@ public class WGConverter {
 				System.out.println("Converting region "+pr.getId());
 				DefaultDomain ownersdd = pr.getOwners();
 				PlayerDomain ownerspd = ownersdd.getPlayerDomain();
-				for (UUID invalidUUID : new LinkedList<UUID>(ownerspd.getUniqueIds())) {
+				for (UUID invalidUUID : new LinkedList<>(ownerspd.getUniqueIds())) {
 					if (invalidUUID.version() == 4) {
 						String name = convertUUID(invalidUUID);
 						if (name != null) {
@@ -50,7 +50,7 @@ public class WGConverter {
 
 				DefaultDomain memberssdd = pr.getMembers();
 				PlayerDomain memberspd = memberssdd.getPlayerDomain();
-				for (UUID invalidUUID : new LinkedList<UUID>(memberspd.getUniqueIds())) {
+				for (UUID invalidUUID : new LinkedList<>(memberspd.getUniqueIds())) {
 					if (invalidUUID.version() == 4) {
 						String name = convertUUID(invalidUUID);
 						if (name != null) {

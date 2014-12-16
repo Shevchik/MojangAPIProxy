@@ -27,7 +27,7 @@ import org.bukkit.entity.Player;
 
 public class CachedData {
 
-	private HashMap<String, PlayerProfile> data = new  HashMap<String, PlayerProfile>();
+	private HashMap<String, PlayerProfile> data = new  HashMap<>();
 
 	@SuppressWarnings("deprecation")
 	public CachedData() {

@@ -18,10 +18,13 @@
 package ru.shevchik.MojangAPIProxy;
 
 import ru.shevchik.MojangAPIProxy.data.CachedData;
-import ru.shevchik.MojangAPIProxy.listeners.JoinListener;
 import ru.shevchik.MojangAPIProxy.proxy.ProxyInjector;
 
 import org.bukkit.Bukkit;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class MojangAPIProxy extends JavaPlugin {
@@ -40,7 +43,14 @@ public class MojangAPIProxy extends JavaPlugin {
 	public void onEnable() {
 		instance = this;
 		data = new CachedData();
-		getServer().getPluginManager().registerEvents(new JoinListener(), this);
+		getServer().getPluginManager().registerEvents(new Listener()
+		{
+			@EventHandler(priority = EventPriority.LOWEST)
+			public void onJoin(PlayerJoinEvent event)
+			{
+				getCachedData().addData(event.getPlayer().getName(), event.getPlayer().getUniqueId());
+			}
+		}, this);
 		getCommand("mapiproxy").setExecutor(new Commands());
 		try {
 			ProxyInjector.injectProxy();
@@ -51,5 +61,10 @@ public class MojangAPIProxy extends JavaPlugin {
 			Bukkit.shutdown();
 		}
 	}
-
+	
+	@Override
+	public void onDisable() {
+		getServer().getServicesManager().unregisterAll(this);
+	}
+	
 }
