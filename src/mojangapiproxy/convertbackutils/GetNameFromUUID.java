@@ -22,8 +22,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.UUID;
 
-import net.minecraft.util.org.apache.commons.io.IOUtils;
-
+import org.apache.commons.io.IOUtils;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
