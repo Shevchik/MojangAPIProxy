@@ -41,7 +41,6 @@ public class MojangAPIProxy extends JavaPlugin {
 		instance = this;
 		data = new CachedData();
 		getServer().getPluginManager().registerEvents(new JoinListener(), this);
-		getCommand("mapiproxy").setExecutor(new Commands());
 		try {
 			ProxyInjector.injectProxy();
 		} catch (Throwable t) {

@@ -18,8 +18,9 @@
 package mojangapiproxy.data;
 
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -27,11 +28,12 @@ import org.bukkit.entity.Player;
 
 public class CachedData {
 
-	private HashMap<String, PlayerProfile> data = new  HashMap<String, PlayerProfile>();
+	private final ConcurrentHashMap<String, PlayerProfile> data;
 
-	@SuppressWarnings("deprecation")
 	public CachedData() {
-		for (OfflinePlayer player : PlayersDataUtils.getPlayers()) {
+		List<OfflinePlayer> players = PlayersDataUtils.getPlayers();
+		data = new ConcurrentHashMap<>(players.size() + Bukkit.getMaxPlayers());
+		for (OfflinePlayer player : players) {
 			if (player.getName() == null) {
 				continue;
 			}
@@ -47,8 +49,9 @@ public class CachedData {
 	}
 
 	public PlayerProfile getPlayerProfile(String name) {
-		if (data.containsKey(name.toLowerCase())) {
-			return data.get(name.toLowerCase());
+		PlayerProfile cached = data.get(name.toLowerCase());
+		if (cached != null) {
+			return cached;
 		}
 		return new PlayerProfile(UUID.nameUUIDFromBytes(("OfflinePlayer:" + name).getBytes(StandardCharsets.UTF_8)), name);
 	}
