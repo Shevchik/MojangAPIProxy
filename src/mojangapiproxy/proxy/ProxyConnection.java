@@ -29,11 +29,10 @@ import java.net.URL;
 import mojangapiproxy.MojangAPIProxy;
 import mojangapiproxy.data.CachedData.PlayerProfile;
 
-import org.bukkit.craftbukkit.libs.com.google.gson.JsonArray;
-import org.bukkit.craftbukkit.libs.com.google.gson.JsonElement;
-import org.bukkit.craftbukkit.libs.com.google.gson.JsonParser;
-
 import com.google.common.base.Charsets;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 
 public class ProxyConnection extends HttpURLConnection {
 
