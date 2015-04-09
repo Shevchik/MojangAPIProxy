@@ -28,11 +28,15 @@ import org.bukkit.plugin.Plugin;
 
 public class ProxyUtils {
 
-	private static HashSet<String> ignoredPlugins = new HashSet<String>(
+	private static final HashSet<String> ignoredPlugins = new HashSet<String>(
 		Arrays.asList(
 			"SkinsRestorer"
 		)
 	);
+
+	public static void addIgnoredPlugin(Plugin plugin) {
+		ignoredPlugins.add(plugin.getName());
+	}
 
 	public static boolean isPluginIgnored(Plugin plugin) {
 		if (plugin == null) {

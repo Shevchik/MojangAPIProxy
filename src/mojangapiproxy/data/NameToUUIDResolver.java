@@ -15,20 +15,39 @@
  *
  */
 
-package mojangapiproxy.listeners;
+package mojangapiproxy.data;
 
-import mojangapiproxy.MojangAPIProxy;
+import java.nio.charset.StandardCharsets;
+import java.util.UUID;
 
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.Bukkit;
 
-public class JoinListener implements Listener {
+public class NameToUUIDResolver {
 
-	@EventHandler(priority = EventPriority.LOWEST)
-	public void onJoin(PlayerJoinEvent event) {
-		MojangAPIProxy.getMojangAPIProxy().getCachedData().addData(event.getPlayer().getName(), event.getPlayer().getUniqueId());
+	public static PlayerProfile getPlayerProfile(String name) {
+		UUID uuid = UUID.nameUUIDFromBytes(("OfflinePlayer:" + name).getBytes(StandardCharsets.UTF_8));
+		String realname = Bukkit.getOfflinePlayer(uuid).getName();
+		return new PlayerProfile(uuid, realname != null ? realname : name);
+	}
+
+	public static class PlayerProfile {
+
+		private UUID uuid;
+		private String name;
+
+		public PlayerProfile(UUID uuid, String name) {
+			this.uuid = uuid;
+			this.name = name;
+		}
+
+		public UUID getUUID() {
+			return uuid;
+		}
+
+		public String getName() {
+			return name;
+		}
+
 	}
 
 }

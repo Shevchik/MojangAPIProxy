@@ -17,8 +17,6 @@
 
 package mojangapiproxy;
 
-import mojangapiproxy.data.CachedData;
-import mojangapiproxy.listeners.JoinListener;
 import mojangapiproxy.proxy.ProxyInjector;
 
 import org.bukkit.Bukkit;
@@ -26,21 +24,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class MojangAPIProxy extends JavaPlugin {
 
-	private static MojangAPIProxy instance;
-	public static MojangAPIProxy getMojangAPIProxy() {
-		return instance;
-	}
-
-	private CachedData data;
-	public CachedData getCachedData() {
-		return data;
-	}
-
 	@Override
 	public void onEnable() {
-		instance = this;
-		data = new CachedData();
-		getServer().getPluginManager().registerEvents(new JoinListener(), this);
 		try {
 			ProxyInjector.injectProxy();
 		} catch (Throwable t) {

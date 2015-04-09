@@ -24,7 +24,7 @@ public class ProxyFactory implements URLStreamHandlerFactory {
 
 	@Override
 	public URLStreamHandler createURLStreamHandler(String protocol) {
-		if (protocol.equals("http") || protocol.equals("https" )) {
+		if (protocol.equals("http") || protocol.equals("https")) {
 			return new ProxyStreamHandler(protocol);
 		}
 		return null;
