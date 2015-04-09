@@ -25,6 +25,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLStreamHandler;
 
+import mojangapiproxy.utils.ProxyUtils;
+
 public class ProxyStreamHandler extends URLStreamHandler {
 
 	private final URLStreamHandler handler;

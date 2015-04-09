@@ -26,8 +26,8 @@ import java.net.HttpURLConnection;
 import java.net.Proxy;
 import java.net.URL;
 
-import mojangapiproxy.data.NameToUUIDResolver;
-import mojangapiproxy.data.NameToUUIDResolver.PlayerProfile;
+import mojangapiproxy.utils.NameToUUIDResolver;
+import mojangapiproxy.utils.NameToUUIDResolver.PlayerProfile;
 
 import com.google.common.base.Charsets;
 import com.google.gson.JsonArray;

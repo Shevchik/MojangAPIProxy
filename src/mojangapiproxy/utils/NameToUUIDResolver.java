@@ -15,33 +15,39 @@
  *
  */
 
-package mojangapiproxy.data;
-import java.io.File;
-import java.util.LinkedList;
+package mojangapiproxy.utils;
+
+import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 
-public class PlayersDataUtils {
+public class NameToUUIDResolver {
 
-	public static LinkedList<OfflinePlayer> getPlayers() {
-		LinkedList<OfflinePlayer> players = new LinkedList<OfflinePlayer>();
-		for (File file : getPlayersDataFolder().listFiles()) {
-			if (file.getName().endsWith(".dat")) {
-				String uuidstring = file.getName().substring(0, file.getName().length() - 4);
-				try {
-					players.add(Bukkit.getOfflinePlayer(UUID.fromString(uuidstring)));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		return players;
+	public static PlayerProfile getPlayerProfile(String name) {
+		UUID uuid = UUID.nameUUIDFromBytes(("OfflinePlayer:" + name).getBytes(StandardCharsets.UTF_8));
+		String realname = Bukkit.getOfflinePlayer(uuid).getName();
+		return new PlayerProfile(uuid, realname != null ? realname : name);
 	}
 
-	private static File getPlayersDataFolder() {
-		return new File(Bukkit.getWorlds().get(0).getWorldFolder(), "playerdata");
+	public static class PlayerProfile {
+
+		private UUID uuid;
+		private String name;
+
+		public PlayerProfile(UUID uuid, String name) {
+			this.uuid = uuid;
+			this.name = name;
+		}
+
+		public UUID getUUID() {
+			return uuid;
+		}
+
+		public String getName() {
+			return name;
+		}
+
 	}
 
 }
