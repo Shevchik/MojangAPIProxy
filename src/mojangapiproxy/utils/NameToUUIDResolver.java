@@ -20,14 +20,11 @@ package mojangapiproxy.utils;
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
-import org.bukkit.Bukkit;
-
 public class NameToUUIDResolver {
 
 	public static PlayerProfile getPlayerProfile(String name) {
 		UUID uuid = UUID.nameUUIDFromBytes(("OfflinePlayer:" + name).getBytes(StandardCharsets.UTF_8));
-		String realname = Bukkit.getOfflinePlayer(uuid).getName();
-		return new PlayerProfile(uuid, realname != null ? realname : name);
+		return new PlayerProfile(uuid, name);
 	}
 
 	public static class PlayerProfile {
