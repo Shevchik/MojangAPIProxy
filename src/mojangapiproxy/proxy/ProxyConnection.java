@@ -26,8 +26,8 @@ import java.net.HttpURLConnection;
 import java.net.Proxy;
 import java.net.URL;
 
-import mojangapiproxy.utils.NameToUUIDResolver;
-import mojangapiproxy.utils.NameToUUIDResolver.PlayerProfile;
+import mojangapiproxy.data.PlayerProfile;
+import mojangapiproxy.data.Storage;
 
 import com.google.common.base.Charsets;
 import com.google.gson.JsonArray;
@@ -72,7 +72,7 @@ public class ProxyConnection extends HttpURLConnection {
 			StringBuilder reply = new StringBuilder("[");
 			for (JsonElement user : users) {
 				String username = user.getAsString();
-				PlayerProfile info = NameToUUIDResolver.getPlayerProfile(username);
+				PlayerProfile info = Storage.instance.getProfile(username);
 				reply.append("{");
 				reply.append("\"id\":");
 				reply.append("\"");

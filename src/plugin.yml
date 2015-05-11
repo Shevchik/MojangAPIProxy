@@ -2,3 +2,4 @@ name: MojangAPIProxy
 main: mojangapiproxy.MojangAPIProxy
 version: 1.0
 author: _Shevchik_
+load: STARTUP

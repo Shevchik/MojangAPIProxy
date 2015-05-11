@@ -17,15 +17,22 @@
 
 package mojangapiproxy;
 
+import mojangapiproxy.data.Storage;
 import mojangapiproxy.proxy.ProxyInjector;
 
 import org.bukkit.Bukkit;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class MojangAPIProxy extends JavaPlugin {
+public class MojangAPIProxy extends JavaPlugin implements Listener {
 
 	@Override
 	public void onEnable() {
+		Storage.init();
+		getServer().getPluginManager().registerEvents(this, this);
 		try {
 			ProxyInjector.injectProxy();
 		} catch (Throwable t) {
@@ -34,6 +41,11 @@ public class MojangAPIProxy extends JavaPlugin {
 			getLogger().severe("Shutting down server");
 			Bukkit.shutdown();
 		}
+	}
+
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+	public void onJoin(PlayerJoinEvent event) {
+		Storage.instance.addPlayer(event.getPlayer());
 	}
 
 }
