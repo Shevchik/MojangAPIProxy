@@ -1,5 +1,7 @@
 package mojangapiproxy.data;
 
+import java.nio.charset.StandardCharsets;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.Bukkit;
@@ -31,7 +33,11 @@ public class Storage {
 	}
 
 	public PlayerProfile getProfile(String name) {
-		return data.get(lc(name));
+		PlayerProfile profile = data.get(lc(name));
+		if (profile == null) {
+			return new PlayerProfile(name, UUID.nameUUIDFromBytes(("OfflinePlayer:"+name).getBytes(StandardCharsets.UTF_8)));
+		}
+		return profile;
 	}
 
 
